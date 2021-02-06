@@ -1,0 +1,38 @@
+fragment minMax on MinMaxInt {
+  min
+  max
+  __typename
+}
+
+query GetMapCenter {
+  mapCenter @client {
+    lat
+    lng
+  }
+}
+
+query GetActiveListing {
+  activeListingId @client
+}
+
+query SearchQuery($request: SearchResultRequest!) {
+  results: search(request: $request) {
+    __typename
+    listings {
+      bedrooms
+      sleeps
+      bathrooms {
+        full
+        half
+        toiletOnly
+        __typename
+      }
+      listingId
+      geoCode {
+        latitude
+        longitude
+        __typename
+      }
+    }
+  }
+}

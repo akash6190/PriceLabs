@@ -28,7 +28,9 @@
       "targets": {
         "build": {
           "executor": "@nrwl/web:build",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/apps/price-labs",
             "index": "apps/price-labs/src/index.html",
@@ -39,8 +41,16 @@
               "apps/price-labs/src/favicon.ico",
               "apps/price-labs/src/assets"
             ],
-            "styles": ["apps/price-labs/src/styles.scss"],
+            "styles": [
+              "apps/price-labs/src/styles/styles.scss"
+            ],
             "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "./node_modules",
+                "./apps/price-labs/src/styles"
+              ]
+            },
             "webpackConfig": "@nrwl/react/plugins/webpack"
           },
           "configurations": {
@@ -71,7 +81,9 @@
         "serve": {
           "executor": "@nrwl/web:dev-server",
           "options": {
-            "buildTarget": "price-labs:build"
+            "buildTarget": "price-labs:build",
+            "proxyConfig": "apps/price-labs/proxy.conf.json"
+
           },
           "configurations": {
             "production": {
@@ -82,12 +94,16 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/price-labs/**/*.{ts,tsx,js,jsx}"]
+            "lintFilePatterns": [
+              "apps/price-labs/**/*.{ts,tsx,js,jsx}"
+            ]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/price-labs"],
+          "outputs": [
+            "coverage/apps/price-labs"
+          ],
           "options": {
             "jestConfig": "apps/price-labs/jest.config.js",
             "passWithNoTests": true
@@ -116,7 +132,59 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/price-labs-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": [
+              "apps/price-labs-e2e/**/*.{js,ts}"
+            ]
+          }
+        }
+      }
+    },
+    "components": {
+      "root": "libs/components",
+      "sourceRoot": "libs/components/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/components/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/components"
+          ],
+          "options": {
+            "jestConfig": "libs/components/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "graphql": {
+      "root": "libs/graphql",
+      "sourceRoot": "libs/graphql/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/graphql/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/graphql"
+          ],
+          "options": {
+            "jestConfig": "libs/graphql/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }

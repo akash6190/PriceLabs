@@ -1,0 +1,9 @@
+{
+  "/graphql": {
+    "target": "https://www.vrbo.com/serp/g",
+    "logLevel": "debug",
+    "cookieDomainRewrite": "localhost",
+    "secure": true,
+    "changeOrigin": true
+  }
+}

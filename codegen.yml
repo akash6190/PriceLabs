@@ -1,0 +1,17 @@
+overwrite: true
+schema: './libs/graphql/src/client/**/*.local.graphql'
+documents: './libs/graphql/src/client/**/*.operations.graphql'
+generates:
+  libs/graphql/src/lib/graphql.ts:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'
+    config:
+      reactApolloVersion: 3
+      withHooks: true
+      withHOC: false
+      withComponent: false
+  # ./graphql.schema.json:
+  #   plugins:
+  #     - 'introspection'

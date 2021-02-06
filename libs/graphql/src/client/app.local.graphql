@@ -1,0 +1,91 @@
+type PointRef {
+  latitude: Int
+  longitude: Int
+}
+
+type BathroomDetails {
+  full: Int
+  half: Int
+  toiletOnly: Boolean
+}
+type SearchItem {
+  listingId: String!
+  sleeps: Int!
+  relevance: Int!
+  description: String!
+
+  bathrooms: BathroomDetails
+
+  bedrooms: Int
+  noOfOccupants: Int
+  geoCode: PointRef!
+  # This will store ratings
+  ratingValue: Int
+  # This will store total Int of ratings
+  ratingCount: Int
+}
+
+interface SearchResultList {
+  listings: [SearchItem]!
+}
+
+type MinMaxInt {
+  min: Int
+  max: Int
+}
+
+interface MapPoint {
+  lat: Int
+  lng: Int
+}
+
+type Query {
+  activeListingId: String @client
+  mapCenter: MapPoint @client
+  search(request: SearchResultRequest!): SearchResultList
+}
+
+input PageInput {
+  page: Int!
+  pageSize: Int!
+}
+
+#TODO:: need to check possible values
+input FilterInput {
+  testFilter: Int
+}
+
+input CoreFilterInput {
+  maxBathrooms: Int
+  maxBedrooms: Int
+  maxNightlyPrice: Int
+  maxTotalPrice: Int
+  minTotalPrice: Int
+  minBathrooms: Int
+  minBedrooms: Int
+  minNightlyPrice: Int
+  pets: Int
+}
+
+# TODO:: This will be used when scrolling the map or drawing over the map
+input BoundingBoxInput {
+  maxLat: Int
+  maxLng: Int
+  minLat: Int
+  minLng: Int
+}
+
+# this is the request required
+input SearchResultRequest {
+  paging: PageInput
+  filterVersion: String
+  filters: [FilterInput]!
+  coreFilters: CoreFilterInput!
+  boundingBox: BoundingBoxInput
+  # This must be there
+  q: String!
+}
+
+type Mutation {
+  hoverSearch(searchId: String!): SearchItem
+}

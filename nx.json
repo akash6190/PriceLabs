@@ -17,6 +17,8 @@
   },
   "projects": {
     "price-labs": { "tags": [] },
-    "price-labs-e2e": { "tags": [], "implicitDependencies": ["price-labs"] }
+    "price-labs-e2e": { "tags": [], "implicitDependencies": ["price-labs"] },
+    "components": { "tags": [] },
+    "graphql": { "tags": [] }
   }
 }
