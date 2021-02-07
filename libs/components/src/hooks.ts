@@ -1,17 +1,20 @@
 import {
-  CoreFilterInput,
   currentFilters,
-  queryString,
+  useGetCurrentPageQuery,
+  useGetSearchStringQuery,
   useSearchQueryLazyQuery,
 } from '@pricelabs/graphql';
-import { useEffect, useState } from 'react';
-import { singletonHook } from 'react-singleton-hook';
+import { useEffect } from 'react';
 
 export const useSearchResults = () => {
   // TODO:: Not required abhi, Used when adding a draw filter
   // const [boundingBox, setBoundingBox] = useState({});
   const filters = currentFilters();
-  const query = queryString();
+  const { data: pageData } = useGetCurrentPageQuery();
+
+  const {
+    data: { queryString },
+  } = useGetSearchStringQuery();
 
   const [
     performSearch,
@@ -20,7 +23,6 @@ export const useSearchResults = () => {
 
   // run everytime query is changed
   useEffect(() => {
-    console.log('Running query');
     performSearch({
       variables: {
         request: {
@@ -28,20 +30,21 @@ export const useSearchResults = () => {
           filters: [],
           coreFilters: filters,
           paging: {
-            page: 1,
+            page: pageData?.currentPage ?? 0,
             pageSize: 50,
           },
-          boundingBox: {
-            maxLat: 1,
-            minLat: 1,
-            maxLng: 1,
-            minLng: 1,
-          },
-          q: query,
+          // This will be used when drawing a rectangle
+          // boundingBox: {
+          //   maxLat: 1,
+          //   minLat: 1,
+          //   maxLng: 1,
+          //   minLng: 1,
+          // },
+          q: queryString,
         },
       },
     });
-  }, [query, filters]);
+  }, [queryString, filters, pageData?.currentPage]);
 
   return {
     loading,

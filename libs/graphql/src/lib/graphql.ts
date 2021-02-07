@@ -26,6 +26,21 @@ export type BathroomDetails = {
   toiletOnly?: Maybe<Scalars['Boolean']>;
 };
 
+export type ImageRef = {
+  __typename?: 'ImageRef';
+  altText: Scalars['String'];
+  c6_uri: Scalars['String'];
+  c9_uri: Scalars['String'];
+};
+
+export type MapViewport = {
+  __typename?: 'MapViewport';
+  neLat?: Maybe<Scalars['Int']>;
+  neLong?: Maybe<Scalars['Int']>;
+  swLat?: Maybe<Scalars['Int']>;
+  swLong?: Maybe<Scalars['Int']>;
+};
+
 export type SearchItem = {
   __typename?: 'SearchItem';
   listingId: Scalars['String'];
@@ -36,11 +51,23 @@ export type SearchItem = {
   bedrooms?: Maybe<Scalars['Int']>;
   noOfOccupants?: Maybe<Scalars['Int']>;
   geoCode: PointRef;
+  mapViewport?: Maybe<MapViewport>;
+  images?: Maybe<ImageRef>;
   ratingValue?: Maybe<Scalars['Int']>;
   ratingCount?: Maybe<Scalars['Int']>;
+  averageRating?: Maybe<Scalars['Int']>;
+  reviewCount?: Maybe<Scalars['Int']>;
+  queryUUID?: Maybe<Scalars['String']>;
+  headline?: Maybe<Scalars['String']>;
 };
 
 export type SearchResultList = {
+  fromRecord: Scalars['Int'];
+  toRecord: Scalars['Int'];
+  pageSize: Scalars['Int'];
+  pageCount: Scalars['Int'];
+  page: Scalars['Int'];
+  resultCount: Scalars['Int'];
   listings: Array<Maybe<SearchItem>>;
 };
 
@@ -59,6 +86,9 @@ export type Query = {
   __typename?: 'Query';
   activeListingId?: Maybe<Scalars['String']>;
   mapCenter?: Maybe<MapPoint>;
+  showFilters?: Maybe<Scalars['Boolean']>;
+  queryString: Scalars['String'];
+  currentPage?: Maybe<Scalars['Int']>;
   search?: Maybe<SearchResultList>;
 };
 
@@ -127,6 +157,30 @@ export type GetMapCenterQuery = (
   & { mapCenter?: Maybe<never> }
 );
 
+export type GetSearchStringQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetSearchStringQuery = (
+  { __typename?: 'Query' }
+  & Pick<Query, 'queryString'>
+);
+
+export type GetCurrentPageQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCurrentPageQuery = (
+  { __typename?: 'Query' }
+  & Pick<Query, 'currentPage'>
+);
+
+export type ShouldShowFilterQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ShouldShowFilterQuery = (
+  { __typename?: 'Query' }
+  & Pick<Query, 'showFilters'>
+);
+
 export type GetActiveListingQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -185,6 +239,96 @@ export function useGetMapCenterLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type GetMapCenterQueryHookResult = ReturnType<typeof useGetMapCenterQuery>;
 export type GetMapCenterLazyQueryHookResult = ReturnType<typeof useGetMapCenterLazyQuery>;
 export type GetMapCenterQueryResult = Apollo.QueryResult<GetMapCenterQuery, GetMapCenterQueryVariables>;
+export const GetSearchStringDocument = gql`
+    query GetSearchString {
+  queryString @client
+}
+    `;
+
+/**
+ * __useGetSearchStringQuery__
+ *
+ * To run a query within a React component, call `useGetSearchStringQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSearchStringQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSearchStringQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetSearchStringQuery(baseOptions?: Apollo.QueryHookOptions<GetSearchStringQuery, GetSearchStringQueryVariables>) {
+        return Apollo.useQuery<GetSearchStringQuery, GetSearchStringQueryVariables>(GetSearchStringDocument, baseOptions);
+      }
+export function useGetSearchStringLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSearchStringQuery, GetSearchStringQueryVariables>) {
+          return Apollo.useLazyQuery<GetSearchStringQuery, GetSearchStringQueryVariables>(GetSearchStringDocument, baseOptions);
+        }
+export type GetSearchStringQueryHookResult = ReturnType<typeof useGetSearchStringQuery>;
+export type GetSearchStringLazyQueryHookResult = ReturnType<typeof useGetSearchStringLazyQuery>;
+export type GetSearchStringQueryResult = Apollo.QueryResult<GetSearchStringQuery, GetSearchStringQueryVariables>;
+export const GetCurrentPageDocument = gql`
+    query GetCurrentPage {
+  currentPage @client
+}
+    `;
+
+/**
+ * __useGetCurrentPageQuery__
+ *
+ * To run a query within a React component, call `useGetCurrentPageQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCurrentPageQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCurrentPageQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetCurrentPageQuery(baseOptions?: Apollo.QueryHookOptions<GetCurrentPageQuery, GetCurrentPageQueryVariables>) {
+        return Apollo.useQuery<GetCurrentPageQuery, GetCurrentPageQueryVariables>(GetCurrentPageDocument, baseOptions);
+      }
+export function useGetCurrentPageLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCurrentPageQuery, GetCurrentPageQueryVariables>) {
+          return Apollo.useLazyQuery<GetCurrentPageQuery, GetCurrentPageQueryVariables>(GetCurrentPageDocument, baseOptions);
+        }
+export type GetCurrentPageQueryHookResult = ReturnType<typeof useGetCurrentPageQuery>;
+export type GetCurrentPageLazyQueryHookResult = ReturnType<typeof useGetCurrentPageLazyQuery>;
+export type GetCurrentPageQueryResult = Apollo.QueryResult<GetCurrentPageQuery, GetCurrentPageQueryVariables>;
+export const ShouldShowFilterDocument = gql`
+    query ShouldShowFilter {
+  showFilters @client
+}
+    `;
+
+/**
+ * __useShouldShowFilterQuery__
+ *
+ * To run a query within a React component, call `useShouldShowFilterQuery` and pass it any options that fit your needs.
+ * When your component renders, `useShouldShowFilterQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useShouldShowFilterQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useShouldShowFilterQuery(baseOptions?: Apollo.QueryHookOptions<ShouldShowFilterQuery, ShouldShowFilterQueryVariables>) {
+        return Apollo.useQuery<ShouldShowFilterQuery, ShouldShowFilterQueryVariables>(ShouldShowFilterDocument, baseOptions);
+      }
+export function useShouldShowFilterLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ShouldShowFilterQuery, ShouldShowFilterQueryVariables>) {
+          return Apollo.useLazyQuery<ShouldShowFilterQuery, ShouldShowFilterQueryVariables>(ShouldShowFilterDocument, baseOptions);
+        }
+export type ShouldShowFilterQueryHookResult = ReturnType<typeof useShouldShowFilterQuery>;
+export type ShouldShowFilterLazyQueryHookResult = ReturnType<typeof useShouldShowFilterLazyQuery>;
+export type ShouldShowFilterQueryResult = Apollo.QueryResult<ShouldShowFilterQuery, ShouldShowFilterQueryVariables>;
 export const GetActiveListingDocument = gql`
     query GetActiveListing {
   activeListingId @client
@@ -219,7 +363,18 @@ export const SearchQueryDocument = gql`
     query SearchQuery($request: SearchResultRequest!) {
   results: search(request: $request) {
     __typename
+    fromRecord
+    toRecord
+    pageSize
+    pageCount
+    page
+    resultCount
     listings {
+      images {
+        altText
+        c6_uri
+        c9_uri
+      }
       bedrooms
       sleeps
       bathrooms {
@@ -228,7 +383,10 @@ export const SearchQueryDocument = gql`
         toiletOnly
         __typename
       }
+      headline
       listingId
+      averageRating
+      reviewCount
       geoCode {
         latitude
         longitude

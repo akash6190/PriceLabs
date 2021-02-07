@@ -1,0 +1,25 @@
+.infoView {
+  width: 300px;
+  display: flex;
+  .image {
+    height: 120px;
+    width: 120px;
+    border-radius: 4px;
+    background-repeat: no-repeat;
+    background-attachment: local;
+    background-position: center;
+    background-size: cover;
+  }
+  .extra {
+    font-size: 12px;
+    color: rgba(#000, 0.5);
+    span::after {
+      content: '·';
+      font-size: 20px;
+      line-height: 12px;
+      &:last-child {
+        content: '';
+      }
+    }
+  }
+}

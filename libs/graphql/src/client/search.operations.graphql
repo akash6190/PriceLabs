@@ -11,6 +11,17 @@ query GetMapCenter {
   }
 }
 
+query GetSearchString {
+  queryString @client
+}
+query GetCurrentPage {
+  currentPage @client
+}
+
+query ShouldShowFilter {
+  showFilters @client
+}
+
 query GetActiveListing {
   activeListingId @client
 }
@@ -18,7 +29,18 @@ query GetActiveListing {
 query SearchQuery($request: SearchResultRequest!) {
   results: search(request: $request) {
     __typename
+    fromRecord
+    toRecord
+    pageSize
+    pageCount
+    page
+    resultCount
     listings {
+      images {
+        altText
+        c6_uri
+        c9_uri
+      }
       bedrooms
       sleeps
       bathrooms {
@@ -27,7 +49,10 @@ query SearchQuery($request: SearchResultRequest!) {
         toiletOnly
         __typename
       }
+      headline
       listingId
+      averageRating
+      reviewCount
       geoCode {
         latitude
         longitude

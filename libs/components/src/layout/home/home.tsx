@@ -14,7 +14,7 @@ export const HomeLayout: React.FC<HomeLayoutProps> = ({ children }) => {
   // can be used for common header and footer later on
   return (
     <div className={styles.homeContainer}>
-      <Sidebar />
+      <Sidebar className={styles.sidebarContainer} />
       <MapView className={styles.mapContainer} />
     </div>
   );

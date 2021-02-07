@@ -1,7 +1,19 @@
 import { makeVar, TypePolicies } from '@apollo/client';
 import { CoreFilterInput, PointRef } from './lib/graphql';
 
-export const activeListing = makeVar<string>('');
+export enum EHoverTarget {
+  NONE,
+  ON_MAP,
+  ON_ITEM,
+}
+
+export const activeListing = makeVar<{
+  listingId: string;
+  hoverTarget: EHoverTarget;
+}>({
+  listingId: '',
+  hoverTarget: EHoverTarget.NONE,
+});
 export const queryString = makeVar<string>('');
 export const loading = makeVar<boolean>(true);
 export const currentFilters = makeVar<CoreFilterInput>({
@@ -14,6 +26,8 @@ export const currentFilters = makeVar<CoreFilterInput>({
   minNightlyPrice: 0,
   minTotalPrice: null,
 });
+
+export const currentPage = makeVar<number>(1);
 
 // TODO:: change default to use users current location (check react-use)
 export const mapCenter = makeVar<{
@@ -32,6 +46,8 @@ export const paginationData = makeVar<{
   pageSize: 10,
 });
 
+export const showFilters = makeVar<boolean>(false);
+
 export const typePolicies: TypePolicies = {
   Query: {
     fields: {
@@ -43,6 +59,24 @@ export const typePolicies: TypePolicies = {
       mapCenter: {
         read() {
           return mapCenter();
+        },
+      },
+
+      currentPage: {
+        read() {
+          return currentPage();
+        },
+      },
+
+      queryString: {
+        read() {
+          return queryString();
+        },
+      },
+
+      showFilters: {
+        read() {
+          return showFilters();
         },
       },
     },

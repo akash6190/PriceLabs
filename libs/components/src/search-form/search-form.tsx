@@ -4,7 +4,22 @@ import { ScriptLoaded } from '@pricelabs/components/script-loaded/script-loaded'
 
 import styles from './search-form.module.scss';
 import { useSearchResults } from '../hooks';
-import { mapCenter } from '@pricelabs/graphql';
+import {
+  currentPage,
+  mapCenter,
+  queryString,
+  showFilters,
+} from '@pricelabs/graphql';
+import { Button } from 'react-bootstrap';
+import clsx from 'clsx';
+
+// TODO:: Currently only reading the alphanumeric words
+const getQueryFromAddress = (addr: string) => {
+  return addr
+    .match(/[A-Za-z0-9]\w+/g)
+    .map((a) => a.toLocaleLowerCase())
+    .join('-');
+};
 
 /* eslint-disable-next-line */
 export interface SearchFormProps {}
@@ -17,6 +32,9 @@ export function SearchForm(props: SearchFormProps) {
 
   const onPlaceChanged = useCallback(() => {
     const place = autocomplete.getPlace();
+    // set Query string
+    currentPage(1);
+    queryString(getQueryFromAddress(place.formatted_address));
     // set new mapCenter
     mapCenter({
       lat: place?.geometry?.location?.lat(),
@@ -25,19 +43,25 @@ export function SearchForm(props: SearchFormProps) {
   }, []);
 
   return (
-    <ScriptLoaded>
-      <Autocomplete
-        onLoad={onLoad}
-        fields={['geometry']}
-        onPlaceChanged={onPlaceChanged}
-      >
-        <input
-          type="text"
-          placeholder="Customized your placeholder"
-          className={styles.inputElem}
-        />
-      </Autocomplete>
-    </ScriptLoaded>
+    <div className={clsx(styles.container, 'p-2')}>
+      <ScriptLoaded>
+        <Autocomplete
+          className={clsx(styles.autoCompleteInput, 'pr-2')}
+          onLoad={onLoad}
+          fields={['geometry', 'formatted_address', 'address_component']}
+          onPlaceChanged={onPlaceChanged}
+        >
+          <input
+            type="text"
+            placeholder="Customized your placeholder"
+            className={styles.inputElem}
+          />
+        </Autocomplete>
+      </ScriptLoaded>
+      <Button className={styles.button} onClick={() => showFilters(true)}>
+        Filters
+      </Button>
+    </div>
   );
 }
 

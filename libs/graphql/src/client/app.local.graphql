@@ -8,6 +8,20 @@ type BathroomDetails {
   half: Int
   toiletOnly: Boolean
 }
+
+type ImageRef {
+  altText: String!
+  c6_uri: String!
+  c9_uri: String!
+}
+
+type MapViewport {
+  neLat: Int
+  neLong: Int
+  swLat: Int
+  swLong: Int
+}
+
 type SearchItem {
   listingId: String!
   sleeps: Int!
@@ -19,13 +33,25 @@ type SearchItem {
   bedrooms: Int
   noOfOccupants: Int
   geoCode: PointRef!
+  mapViewport: MapViewport
+  images: ImageRef
   # This will store ratings
   ratingValue: Int
   # This will store total Int of ratings
   ratingCount: Int
+  averageRating: Int
+  reviewCount: Int
+  queryUUID: String
+  headline: String
 }
 
 interface SearchResultList {
+  fromRecord: Int!
+  toRecord: Int!
+  pageSize: Int!
+  pageCount: Int!
+  page: Int!
+  resultCount: Int!
   listings: [SearchItem]!
 }
 
@@ -42,6 +68,9 @@ interface MapPoint {
 type Query {
   activeListingId: String @client
   mapCenter: MapPoint @client
+  showFilters: Boolean @client
+  queryString: String! @client
+  currentPage: Int @client
   search(request: SearchResultRequest!): SearchResultList
 }
 

@@ -1,0 +1,92 @@
+$border-radius: 2px;
+
+:root {
+  --star-size: 12px;
+  --star-color: #ccc;
+  --star-background: #000;
+}
+
+.stars {
+  --percent: calc(var(--rating) / 5 * 100%);
+
+  display: inline-block;
+  font-size: var(--star-size);
+  font-family: Times; // make sure ★ appears correctly
+  line-height: 1;
+
+  &::before {
+    content: '★★★★★';
+    letter-spacing: 3px;
+    background: linear-gradient(
+      90deg,
+      var(--star-background) var(--percent),
+      var(--star-color) var(--percent)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-bottom: 1px solid transparentize($color: #000000, $amount: 0.2);
+  border-bottom-left-radius: $border-radius;
+  border-bottom-right-radius: $border-radius;
+  overflow: hidden;
+  &.active {
+    box-shadow: 0 8px 24px rgba(#000, 30%);
+  }
+}
+
+.image {
+  width: 100px;
+  height: 100px;
+  border-radius: $border-radius * 2;
+  background-repeat: no-repeat;
+  background-attachment: local;
+  background-position: center;
+  background-size: cover;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: hidden;
+  .matchPerc {
+    font-size: 12px;
+    font-weight: bold;
+    &.green {
+      color: olivedrab;
+    }
+    &.yellow {
+      color: yellowgreen;
+    }
+  }
+  .extra {
+    font-size: 10px;
+    color: rgba(#000, 0.5);
+    span::after {
+      content: '·';
+      font-size: 20px;
+      line-height: 10px;
+    }
+    span:last-child::after {
+      content: '';
+    }
+  }
+  .title {
+    font-weight: bold;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+.reviewContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
