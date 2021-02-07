@@ -84,6 +84,7 @@ export const SearchResults: React.FC<SearchResultsProps> = (
         </label>
       </div> */}
       <div className={styles.results}>
+        {/* @ts-ignore */}
         {searchData?.results?.listings.map((l) => (
           <SearchItem
             key={l.listingId}
@@ -101,7 +102,8 @@ export const SearchResults: React.FC<SearchResultsProps> = (
       </div>
       <div className="d-flex">
         <div>
-          Viewing {searchData?.results?.fromRecord} -{' '}
+          {/* @ts-ignore */}
+          Viewing {searchData?.results?.fromRecord} -{/* @ts-ignore */}
           {searchData?.results?.toRecord} of {searchData?.results?.resultCount}{' '}
           properties
         </div>
@@ -111,6 +113,7 @@ export const SearchResults: React.FC<SearchResultsProps> = (
             variant="link"
             onClick={() => {
               currentPage(
+                /* @ts-ignore */
                 (pageData?.currentPage - 1) % searchData?.results?.pageCount
               );
             }}
@@ -119,20 +122,24 @@ export const SearchResults: React.FC<SearchResultsProps> = (
           </Button>
           <input
             min={0}
+            /* @ts-ignore */
             max={searchData?.results?.pageCount}
             step={1}
             type="number"
             value={pageData?.currentPage}
             onChange={(e) => {
               currentPage(
+                /* @ts-ignore */
                 e.currentTarget.value % searchData?.results?.pageCount
               );
             }}
           />
+          {/* @ts-ignore */}
           {'/' + searchData?.results?.pageCount}
           <Button
             onClick={() => {
               currentPage(
+                /* @ts-ignore */
                 (pageData?.currentPage + 1) % searchData?.results?.pageCount
               );
             }}

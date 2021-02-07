@@ -93,7 +93,8 @@ export const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
         }}
         center={data?.mapCenter}
       >
-        {searchData?.results?.listings.map((l) => (
+        {/* @ts-ignore */}
+        {searchData?.results.listings.map((l) => (
           <MarkerWithInfo key={l.listingId} listing={l} />
         ))}
       </GoogleMap>

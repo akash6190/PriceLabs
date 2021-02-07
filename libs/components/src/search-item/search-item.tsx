@@ -28,7 +28,8 @@ const ReviewItem: React.FC<{ count: number; rating: number }> = ({
   rating,
 }) => {
   return (
-    <div className={styles.stars} style={{ '--rating': rating }}>
+    <div>
+      {/* @ts-ignore */}
       <span>({count})</span>
     </div>
   );
