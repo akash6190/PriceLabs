@@ -18,19 +18,6 @@ export function DrawingLayer(props: DrawingLayerProps) {
       return !prev;
     });
   }, []);
-  // Press esc key to reset
-  useEffect(() => {
-    const onEscPressed = (e: KeyboardEvent) => {
-      console.log(e.key);
-      if (!showBtn && e.key === '27') {
-        setShowBtn(false);
-      }
-    };
-    document.addEventListener('keypress', onEscPressed);
-    return () => {
-      document.removeEventListener('keypress', onEscPressed);
-    };
-  }, []);
   return (
     <>
       <Button
