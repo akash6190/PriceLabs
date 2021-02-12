@@ -9,7 +9,7 @@ export interface ScriptLoadedProps {}
 
 export const ScriptLoaded: React.FC<ScriptLoadedProps> = ({ children }) => {
   const { isLoaded, loadError } = useLoadScript({
-    libraries: ['places'],
+    libraries: ['places', 'drawing'],
     googleMapsApiKey: 'AIzaSyCS24vzaCuHGf8s_Hcc-J8sg1eJks2mG3A',
   });
 

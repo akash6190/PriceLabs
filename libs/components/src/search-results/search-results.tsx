@@ -49,11 +49,9 @@ export const SearchResults: React.FC<SearchResultsProps> = (
   const { data: pageData } = useGetCurrentPageQuery();
   const { loading, searchData } = useSearchResults();
   const [currentTab, setCurrentTab] = useState(0);
-  if (loading) {
-    return <Loading />;
-  }
-
-  console.log(searchData);
+  // if (loading) {
+  //   return <Loading />;
+  // }
 
   return (
     <div className={clsx(styles.container, props.className)}>
@@ -84,44 +82,45 @@ export const SearchResults: React.FC<SearchResultsProps> = (
         </label>
       </div> */}
       <div className={styles.results}>
-        {/* @ts-ignore */}
-        {searchData?.results?.listings.map((l) => (
-          <SearchItem
-            key={l.listingId}
-            listingId={l.listingId}
-            bedrooms={l.bedrooms}
-            bathrooms={calculateBathroomCount(l)}
-            occupancy={l.sleeps}
-            imgUrl={l.images[0].c9_uri}
-            itemTitle={l.headline}
-            matchPerc={70}
-            rating={l.averageRating}
-            reviewCount={l.reviewCount}
-          />
-        ))}
+        {loading ? (
+          <Loading />
+        ) : (
+          /* @ts-ignore */
+          searchData?.results?.listings?.map((l) => (
+            <SearchItem
+              key={l.listingId}
+              listingId={l.listingId}
+              bedrooms={l.bedrooms}
+              bathrooms={calculateBathroomCount(l)}
+              occupancy={l.sleeps}
+              imgUrl={l.images[0].c9_uri}
+              itemTitle={l.headline}
+              matchPerc={70}
+              rating={l.averageRating}
+              reviewCount={l.reviewCount}
+            />
+          ))
+        )}
       </div>
-      <div className="d-flex">
-        <div>
+      <div className="d-flex align-items-center p-2">
+        <div className={styles.flexGrowFill}>
           {/* @ts-ignore */}
           Viewing {searchData?.results?.fromRecord} -{/* @ts-ignore */}
           {searchData?.results?.toRecord} of {searchData?.results?.resultCount}{' '}
           properties
         </div>
         <div className="d-flex align-items-center">
-          {/* Needto change this to us icons if timepersist */}
           <Button
-            variant="link"
+            variant="outline-secondary"
+            disabled={pageData?.currentPage <= 1}
             onClick={() => {
-              currentPage(
-                /* @ts-ignore */
-                (pageData?.currentPage - 1) % searchData?.results?.pageCount
-              );
+              currentPage(pageData?.currentPage - 1);
             }}
           >
             &lt;{' '}
           </Button>
           <input
-            min={0}
+            min={1}
             /* @ts-ignore */
             max={searchData?.results?.pageCount}
             step={1}
@@ -130,20 +129,19 @@ export const SearchResults: React.FC<SearchResultsProps> = (
             onChange={(e) => {
               currentPage(
                 /* @ts-ignore */
-                e.currentTarget.value % searchData?.results?.pageCount
+                e.currentTarget.value
               );
             }}
           />
           {/* @ts-ignore */}
-          {'/' + searchData?.results?.pageCount}
+          {'/' + searchData?.results?.pageCount ?? 1}
           <Button
+            /* @ts-ignore */
+            disabled={pageData?.currentPage >= searchData?.results?.pageCount}
             onClick={() => {
-              currentPage(
-                /* @ts-ignore */
-                (pageData?.currentPage + 1) % searchData?.results?.pageCount
-              );
+              currentPage(pageData?.currentPage + 1);
             }}
-            variant="link"
+            variant="outline-secondary"
           >
             &gt;
           </Button>

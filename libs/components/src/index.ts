@@ -1,3 +1,4 @@
+export * from './drawing-layer/drawing-layer';
 export * from './loading/loading';
 export * from './script-loaded/script-loaded';
 export * from './search-form/search-form';

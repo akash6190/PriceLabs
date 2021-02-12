@@ -9,6 +9,10 @@ $inactiveBorder: transparentize(
   flex-direction: column;
   align-items: stretch;
   overflow: auto;
+
+  .flexGrowFill {
+    flex-grow: 1;
+  }
 }
 .tabsContainer {
   display: flex;
@@ -39,4 +43,5 @@ $inactiveBorder: transparentize(
 
 .results {
   overflow: auto;
+  flex-grow: 1;
 }

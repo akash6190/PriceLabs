@@ -1,0 +1,8 @@
+@use './bootstrap' as bs;
+
+$btn-border-radius: (bs.$btn-font-size * bs.$btn-line-height) +
+  (bs.$btn-padding-y * 2);
+$btn-border-radius-sm: (bs.$btn-font-size-sm * bs.$btn-line-height-lg) +
+  (bs.$btn-padding-y-lg * 2);
+$btn-border-radius-lg: (bs.$btn-font-size-lg * bs.$btn-line-height-lg) +
+  (bs.$btn-padding-y-lg * 2);

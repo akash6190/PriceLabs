@@ -1,5 +1,10 @@
 import { makeVar, TypePolicies } from '@apollo/client';
-import { CoreFilterInput, PointRef } from './lib/graphql';
+import {
+  BoundingBoxInput,
+  CoreFilterInput,
+  DrawingBox,
+  PointRef,
+} from './lib/graphql';
 
 export enum EHoverTarget {
   NONE,
@@ -26,6 +31,8 @@ export const currentFilters = makeVar<CoreFilterInput>({
   minNightlyPrice: 0,
   minTotalPrice: null,
 });
+
+export const currentDrawBounds = makeVar<DrawingBox>(null);
 
 export const currentPage = makeVar<number>(1);
 
@@ -77,6 +84,12 @@ export const typePolicies: TypePolicies = {
       showFilters: {
         read() {
           return showFilters();
+        },
+      },
+
+      drawBounds: {
+        read() {
+          return currentDrawBounds();
         },
       },
     },

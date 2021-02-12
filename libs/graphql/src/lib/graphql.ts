@@ -82,6 +82,14 @@ export type MapPoint = {
   lng?: Maybe<Scalars['Int']>;
 };
 
+export type DrawingBox = {
+  __typename?: 'DrawingBox';
+  neLat?: Maybe<Scalars['Int']>;
+  neLng?: Maybe<Scalars['Int']>;
+  swLat?: Maybe<Scalars['Int']>;
+  swLng?: Maybe<Scalars['Int']>;
+};
+
 export type Query = {
   __typename?: 'Query';
   activeListingId?: Maybe<Scalars['String']>;
@@ -89,6 +97,7 @@ export type Query = {
   showFilters?: Maybe<Scalars['Boolean']>;
   queryString: Scalars['String'];
   currentPage?: Maybe<Scalars['Int']>;
+  drawBounds?: Maybe<DrawingBox>;
   search?: Maybe<SearchResultList>;
 };
 
@@ -187,6 +196,17 @@ export type GetActiveListingQueryVariables = Exact<{ [key: string]: never; }>;
 export type GetActiveListingQuery = (
   { __typename?: 'Query' }
   & Pick<Query, 'activeListingId'>
+);
+
+export type GetDrawBoundsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetDrawBoundsQuery = (
+  { __typename?: 'Query' }
+  & { drawBounds?: Maybe<(
+    { __typename?: 'DrawingBox' }
+    & { maxLat: DrawingBox['neLat'], maxLng: DrawingBox['neLng'], minLat: DrawingBox['swLat'], minLng: DrawingBox['swLng'] }
+  )> }
 );
 
 export type SearchQueryQueryVariables = Exact<{
@@ -359,6 +379,41 @@ export function useGetActiveListingLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type GetActiveListingQueryHookResult = ReturnType<typeof useGetActiveListingQuery>;
 export type GetActiveListingLazyQueryHookResult = ReturnType<typeof useGetActiveListingLazyQuery>;
 export type GetActiveListingQueryResult = Apollo.QueryResult<GetActiveListingQuery, GetActiveListingQueryVariables>;
+export const GetDrawBoundsDocument = gql`
+    query GetDrawBounds {
+  drawBounds @client {
+    maxLat: neLat
+    maxLng: neLng
+    minLat: swLat
+    minLng: swLng
+  }
+}
+    `;
+
+/**
+ * __useGetDrawBoundsQuery__
+ *
+ * To run a query within a React component, call `useGetDrawBoundsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetDrawBoundsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetDrawBoundsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetDrawBoundsQuery(baseOptions?: Apollo.QueryHookOptions<GetDrawBoundsQuery, GetDrawBoundsQueryVariables>) {
+        return Apollo.useQuery<GetDrawBoundsQuery, GetDrawBoundsQueryVariables>(GetDrawBoundsDocument, baseOptions);
+      }
+export function useGetDrawBoundsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetDrawBoundsQuery, GetDrawBoundsQueryVariables>) {
+          return Apollo.useLazyQuery<GetDrawBoundsQuery, GetDrawBoundsQueryVariables>(GetDrawBoundsDocument, baseOptions);
+        }
+export type GetDrawBoundsQueryHookResult = ReturnType<typeof useGetDrawBoundsQuery>;
+export type GetDrawBoundsLazyQueryHookResult = ReturnType<typeof useGetDrawBoundsLazyQuery>;
+export type GetDrawBoundsQueryResult = Apollo.QueryResult<GetDrawBoundsQuery, GetDrawBoundsQueryVariables>;
 export const SearchQueryDocument = gql`
     query SearchQuery($request: SearchResultRequest!) {
   results: search(request: $request) {

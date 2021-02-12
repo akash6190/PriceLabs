@@ -1,6 +1,7 @@
 import {
   currentFilters,
   useGetCurrentPageQuery,
+  useGetDrawBoundsQuery,
   useGetSearchStringQuery,
   useSearchQueryLazyQuery,
 } from '@pricelabs/graphql';
@@ -11,7 +12,7 @@ export const useSearchResults = () => {
   // const [boundingBox, setBoundingBox] = useState({});
   const filters = currentFilters();
   const { data: pageData } = useGetCurrentPageQuery();
-
+  const { data: boundsData } = useGetDrawBoundsQuery();
   const {
     data: { queryString },
   } = useGetSearchStringQuery();
@@ -30,21 +31,16 @@ export const useSearchResults = () => {
           filters: [],
           coreFilters: filters,
           paging: {
-            page: pageData?.currentPage ?? 0,
+            page: pageData?.currentPage ?? 1,
             pageSize: 50,
           },
           // This will be used when drawing a rectangle
-          // boundingBox: {
-          //   maxLat: 1,
-          //   minLat: 1,
-          //   maxLng: 1,
-          //   minLng: 1,
-          // },
           q: queryString,
+          boundingBox: boundsData?.drawBounds,
         },
       },
     });
-  }, [queryString, filters, pageData?.currentPage]);
+  }, [queryString, filters, pageData?.currentPage, boundsData?.drawBounds]);
 
   return {
     loading,

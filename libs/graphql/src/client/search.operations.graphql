@@ -26,6 +26,15 @@ query GetActiveListing {
   activeListingId @client
 }
 
+query GetDrawBounds {
+  drawBounds @client {
+    maxLat: neLat
+    maxLng: neLng
+    minLat: swLat
+    minLng: swLng
+  }
+}
+
 query SearchQuery($request: SearchResultRequest!) {
   results: search(request: $request) {
     __typename

@@ -65,12 +65,20 @@ interface MapPoint {
   lng: Int
 }
 
+type DrawingBox {
+  neLat: Int
+  neLng: Int
+  swLat: Int
+  swLng: Int
+}
+
 type Query {
   activeListingId: String @client
   mapCenter: MapPoint @client
   showFilters: Boolean @client
   queryString: String! @client
   currentPage: Int @client
+  drawBounds: DrawingBox @client
   search(request: SearchResultRequest!): SearchResultList
 }
 

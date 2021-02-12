@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { GoogleMap, InfoWindow, Marker } from '@react-google-maps/api';
 import {
   activeListing,
@@ -9,8 +9,8 @@ import {
 import styles from './map-view.module.scss';
 import { ScriptLoaded } from '@pricelabs/components/script-loaded/script-loaded';
 import { useSearchResults } from '@pricelabs/components/hooks';
-import Loading from '../loading/loading';
 import { useReactiveVar } from '@apollo/client';
+import { DrawingLayer } from '../drawing-layer/drawing-layer';
 
 /* eslint-disable-next-line */
 export interface MapViewProps {
@@ -97,6 +97,35 @@ export const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
         {searchData?.results.listings.map((l) => (
           <MarkerWithInfo key={l.listingId} listing={l} />
         ))}
+
+        <Marker
+          position={{
+            lat: 42.05596903889523,
+            lng: -86.47877523091317,
+          }}
+        />
+
+        <Marker
+          position={{
+            lat: 41.79337697865317,
+            lng: -88.63484212544442,
+          }}
+        />
+
+        {/* <Marker
+            position={{
+              lat: ,
+              lng: ,
+            }}
+          />
+
+          <Marker
+            position={{
+              lat: ,
+              lng: ,
+            }}
+          /> */}
+        <DrawingLayer />
       </GoogleMap>
     </ScriptLoaded>
   );
