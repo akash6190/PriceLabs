@@ -28,8 +28,9 @@ const ReviewItem: React.FC<{ count: number; rating: number }> = ({
   rating,
 }) => {
   return (
-    <div>
+    <div className="d-flex align-items-center">
       {/* @ts-ignore */}
+      <div className="stars" style={{ '--rating': rating }}></div>
       <span>({count})</span>
     </div>
   );

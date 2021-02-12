@@ -72,10 +72,21 @@ type DrawingBox {
   swLng: Int
 }
 
+type FilterValues {
+  minBathrooms: Int
+  minBedrooms: Int
+  maxBathrooms: Int
+  maxBedrooms: Int
+  minSleeps: Int
+  maxSleeps: Int
+}
+
 type Query {
   activeListingId: String @client
   mapCenter: MapPoint @client
   showFilters: Boolean @client
+  showFilters: Boolean @client
+  currentFilters: FilterValues @client
   queryString: String! @client
   currentPage: Int @client
   drawBounds: DrawingBox @client

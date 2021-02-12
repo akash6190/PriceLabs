@@ -3,6 +3,7 @@ import {
   BoundingBoxInput,
   CoreFilterInput,
   DrawingBox,
+  FilterValues,
   PointRef,
 } from './lib/graphql';
 
@@ -21,16 +22,7 @@ export const activeListing = makeVar<{
 });
 export const queryString = makeVar<string>('');
 export const loading = makeVar<boolean>(true);
-export const currentFilters = makeVar<CoreFilterInput>({
-  maxBathrooms: 0,
-  minBathrooms: 0,
-  maxBedrooms: 0,
-  minBedrooms: 0,
-  maxNightlyPrice: null,
-  maxTotalPrice: null,
-  minNightlyPrice: 0,
-  minTotalPrice: null,
-});
+export const currentFilters = makeVar<FilterValues>(null);
 
 export const currentDrawBounds = makeVar<DrawingBox>(null);
 
@@ -84,6 +76,12 @@ export const typePolicies: TypePolicies = {
       showFilters: {
         read() {
           return showFilters();
+        },
+      },
+
+      currentFilters: {
+        read() {
+          return currentFilters();
         },
       },
 

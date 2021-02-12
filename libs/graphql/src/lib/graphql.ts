@@ -90,11 +90,22 @@ export type DrawingBox = {
   swLng?: Maybe<Scalars['Int']>;
 };
 
+export type FilterValues = {
+  __typename?: 'FilterValues';
+  minBathrooms?: Maybe<Scalars['Int']>;
+  minBedrooms?: Maybe<Scalars['Int']>;
+  maxBathrooms?: Maybe<Scalars['Int']>;
+  maxBedrooms?: Maybe<Scalars['Int']>;
+  minSleeps?: Maybe<Scalars['Int']>;
+  maxSleeps?: Maybe<Scalars['Int']>;
+};
+
 export type Query = {
   __typename?: 'Query';
   activeListingId?: Maybe<Scalars['String']>;
   mapCenter?: Maybe<MapPoint>;
   showFilters?: Maybe<Scalars['Boolean']>;
+  currentFilters?: Maybe<FilterValues>;
   queryString: Scalars['String'];
   currentPage?: Maybe<Scalars['Int']>;
   drawBounds?: Maybe<DrawingBox>;
@@ -188,6 +199,17 @@ export type ShouldShowFilterQueryVariables = Exact<{ [key: string]: never; }>;
 export type ShouldShowFilterQuery = (
   { __typename?: 'Query' }
   & Pick<Query, 'showFilters'>
+);
+
+export type GetCurrentFiltersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCurrentFiltersQuery = (
+  { __typename?: 'Query' }
+  & { currentFilters?: Maybe<(
+    { __typename?: 'FilterValues' }
+    & Pick<FilterValues, 'minBathrooms' | 'minBedrooms' | 'maxBathrooms' | 'maxBedrooms' | 'minSleeps' | 'maxSleeps'>
+  )> }
 );
 
 export type GetActiveListingQueryVariables = Exact<{ [key: string]: never; }>;
@@ -349,6 +371,43 @@ export function useShouldShowFilterLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type ShouldShowFilterQueryHookResult = ReturnType<typeof useShouldShowFilterQuery>;
 export type ShouldShowFilterLazyQueryHookResult = ReturnType<typeof useShouldShowFilterLazyQuery>;
 export type ShouldShowFilterQueryResult = Apollo.QueryResult<ShouldShowFilterQuery, ShouldShowFilterQueryVariables>;
+export const GetCurrentFiltersDocument = gql`
+    query GetCurrentFilters {
+  currentFilters {
+    minBathrooms
+    minBedrooms
+    maxBathrooms
+    maxBedrooms
+    minSleeps
+    maxSleeps
+  }
+}
+    `;
+
+/**
+ * __useGetCurrentFiltersQuery__
+ *
+ * To run a query within a React component, call `useGetCurrentFiltersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCurrentFiltersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCurrentFiltersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetCurrentFiltersQuery(baseOptions?: Apollo.QueryHookOptions<GetCurrentFiltersQuery, GetCurrentFiltersQueryVariables>) {
+        return Apollo.useQuery<GetCurrentFiltersQuery, GetCurrentFiltersQueryVariables>(GetCurrentFiltersDocument, baseOptions);
+      }
+export function useGetCurrentFiltersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCurrentFiltersQuery, GetCurrentFiltersQueryVariables>) {
+          return Apollo.useLazyQuery<GetCurrentFiltersQuery, GetCurrentFiltersQueryVariables>(GetCurrentFiltersDocument, baseOptions);
+        }
+export type GetCurrentFiltersQueryHookResult = ReturnType<typeof useGetCurrentFiltersQuery>;
+export type GetCurrentFiltersLazyQueryHookResult = ReturnType<typeof useGetCurrentFiltersLazyQuery>;
+export type GetCurrentFiltersQueryResult = Apollo.QueryResult<GetCurrentFiltersQuery, GetCurrentFiltersQueryVariables>;
 export const GetActiveListingDocument = gql`
     query GetActiveListing {
   activeListingId @client

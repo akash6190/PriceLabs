@@ -22,6 +22,17 @@ query ShouldShowFilter {
   showFilters @client
 }
 
+query GetCurrentFilters {
+  currentFilters {
+    minBathrooms
+    minBedrooms
+    maxBathrooms
+    maxBedrooms
+    minSleeps
+    maxSleeps
+  }
+}
+
 query GetActiveListing {
   activeListingId @client
 }

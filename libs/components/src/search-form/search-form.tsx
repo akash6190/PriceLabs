@@ -53,7 +53,7 @@ export function SearchForm(props: SearchFormProps) {
         >
           <input
             type="text"
-            placeholder="Customized your placeholder"
+            placeholder="Search Location"
             className={styles.inputElem}
           />
         </Autocomplete>

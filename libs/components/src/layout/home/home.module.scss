@@ -10,3 +10,21 @@
 .mapContainer {
   flex-grow: 4;
 }
+
+.shadow {
+  box-shadow: 0px 8px 24px #c0c0c0;
+  z-index: 999;
+}
+
+.overlay {
+  &::before {
+    position: absolute;
+    z-index: 9;
+    content: ' ';
+    background: rgba(#000, 0.3);
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+}

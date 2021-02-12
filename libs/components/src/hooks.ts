@@ -1,5 +1,6 @@
 import {
   currentFilters,
+  useGetCurrentFiltersQuery,
   useGetCurrentPageQuery,
   useGetDrawBoundsQuery,
   useGetSearchStringQuery,
@@ -10,7 +11,7 @@ import { useEffect } from 'react';
 export const useSearchResults = () => {
   // TODO:: Not required abhi, Used when adding a draw filter
   // const [boundingBox, setBoundingBox] = useState({});
-  const filters = currentFilters();
+  const { data: filterData } = useGetCurrentFiltersQuery();
   const { data: pageData } = useGetCurrentPageQuery();
   const { data: boundsData } = useGetDrawBoundsQuery();
   const {
@@ -29,7 +30,7 @@ export const useSearchResults = () => {
         request: {
           filterVersion: '1',
           filters: [],
-          coreFilters: filters,
+          coreFilters: filterData?.currentFilters,
           paging: {
             page: pageData?.currentPage ?? 1,
             pageSize: 50,
@@ -40,7 +41,12 @@ export const useSearchResults = () => {
         },
       },
     });
-  }, [queryString, filters, pageData?.currentPage, boundsData?.drawBounds]);
+  }, [
+    queryString,
+    filterData?.currentFilters,
+    pageData?.currentPage,
+    boundsData?.drawBounds,
+  ]);
 
   return {
     loading,
