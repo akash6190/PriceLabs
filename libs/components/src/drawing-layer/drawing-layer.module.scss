@@ -2,5 +2,10 @@
   position: absolute;
   bottom: 16px;
   left: 24px;
-  background-color: #fff;
+  &:global(.btn-outline-primary) {
+    background-color: #fff;
+    &:hover {
+      background-color: #007bff;
+    }
+  }
 }
